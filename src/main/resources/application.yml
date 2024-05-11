@@ -10,9 +10,9 @@ redis-lock:
 logging:
   level:
     org:
-      springframework:
-        data:
-         redis:
-           connection:
-             jedis:
-               JedisConnectionFactory: DEBUG
+      springframework: INFO
+    iwo:
+      wintech: INFO
+executor:
+  scheduler:
+    cron: '*/20 * *  * * *'

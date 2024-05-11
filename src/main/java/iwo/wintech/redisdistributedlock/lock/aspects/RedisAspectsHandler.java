@@ -28,7 +28,7 @@ public class RedisAspectsHandler {
         try {
             distributedLock.lockAndCall(key, lockDuration, () -> {
                 try {
-                    log.info("Executing under redis Lock");
+                    log.info("Executing Through Aspects");
                     return jp.proceed();
                 } catch (final Throwable e) {
                     log.error("Error while executing method: {}", jp.getSignature(), e);

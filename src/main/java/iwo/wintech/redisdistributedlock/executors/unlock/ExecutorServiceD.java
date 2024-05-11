@@ -6,16 +6,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.Scanner;
 import java.util.stream.IntStream;
 
 @RequiredArgsConstructor
 @Slf4j
 //@Component
-public class ExecutorServiceC {
+public class ExecutorServiceD {
 
     private final ProcessOrder processOrder;
 
-    @Scheduled(cron = "1 * * * * *")
+    @Scheduled(cron = "${executor.scheduler.cron}")
     public void execute() {
         IntStream.range(0, 3)
                         .parallel()

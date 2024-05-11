@@ -14,7 +14,7 @@ public class ExecutorServiceB {
     private final ProcessOrder processOrder;
 
 
-    @Scheduled(cron = "1 * * * * *")
+    @Scheduled(cron = "${executor.scheduler.cron}")
     @RedisLockAspect
     public void execute() {
         log.info("Executing ExecutorServiceB");

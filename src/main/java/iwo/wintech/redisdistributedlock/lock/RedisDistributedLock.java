@@ -1,6 +1,7 @@
 package iwo.wintech.redisdistributedlock.lock;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +11,7 @@ import java.util.concurrent.locks.Lock;
 
 @RequiredArgsConstructor
 @Component
+@Slf4j
 public class RedisDistributedLock implements DistributedLock {
 
     private final RedisTemplate<String, byte[]> redisTemplate;
@@ -24,9 +26,11 @@ public class RedisDistributedLock implements DistributedLock {
         final Lock lock = createLock(key, lockDuration);
         lock.lock();
         try {
+            logInfo();
             runnable.run();
         } finally {
             lock.unlock();
+            releaseLogInfo();
         }
     }
 
@@ -35,10 +39,20 @@ public class RedisDistributedLock implements DistributedLock {
         final Lock lock = createLock(key, lockDuration);
         lock.lock();
         try {
+            logInfo();
             return callable.call();
         } finally {
             lock.unlock();
+            releaseLogInfo();
         }
+    }
+
+    private static void releaseLogInfo() {
+        log.info("releasing  lock");
+    }
+
+    private void logInfo() {
+        log.info("Executing under redis Lock");
     }
 
     @Override

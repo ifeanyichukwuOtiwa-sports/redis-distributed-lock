@@ -16,7 +16,7 @@ public class ExecutorServiceC {
     private final DistributedLock distributedLock;
     private final ProcessOrder processOrder;
 
-    @Scheduled(cron = "1 * * * * *")
+    @Scheduled(cron = "${executor.scheduler.cron}")
     public void execute() {
         distributedLock.lockAndExec("redis-lock",
                 Duration.ofSeconds(5),

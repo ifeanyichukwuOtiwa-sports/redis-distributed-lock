@@ -16,7 +16,7 @@ import java.util.Map;
 public class ProcessOrder {
     private static final String PROCESSING = "PROCESSING";
     private static final Map<String, Order> orderMap;
-    private static int status = 1;
+    private static int status = 0;
 
     private final Clock clock;
 
@@ -31,7 +31,7 @@ public class ProcessOrder {
 
 
     public void processOrder(final String orderId, final String serviceId) {
-        status ++;
+        incrementStatus();
         final Order order = orderMap.get(orderId);
         if (order == null) {
             return;
@@ -49,5 +49,9 @@ public class ProcessOrder {
         order.setStatus("PROCESSED");
         orderMap.put(orderId, order);
         log.info("Processed order state {}: by {}, status: {}", order, serviceId, status);
+    }
+
+    private static void incrementStatus() {
+        status++;
     }
 }
